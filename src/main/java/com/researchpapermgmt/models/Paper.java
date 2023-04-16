@@ -4,6 +4,7 @@ import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -30,10 +31,10 @@ public class Paper {
     private @Setter @Getter String title;
 
     @ManyToMany
-    @JoinTable(name = "paper_authors", joinColumns = @JoinColumn(name = "paper_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "author_id", referencedColumnName = "id"))
+    @JoinTable(name = "paper_authors", joinColumns = @JoinColumn(name = "paper_id", foreignKey = @ForeignKey(name = "id")), inverseJoinColumns = @JoinColumn(name = "author_id", foreignKey = @ForeignKey(name = "id")))
     private @Setter @Getter Set<Author> authors;
 
-    @Column(name = "conference")
+    @JoinColumn(name = "conference")
     @ManyToOne
     private @Setter @Getter Conference conference;
 

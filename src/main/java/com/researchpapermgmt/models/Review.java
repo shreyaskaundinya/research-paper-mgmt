@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -21,11 +22,11 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private @Setter @Getter long id;
 
-    @Column(name = "paper_id")
+    @JoinColumn(name = "paper_id")
     @ManyToOne
     private @Setter @Getter Paper paper;
 
-    @Column(name = "panel_id")
+    @JoinColumn(name = "panel_id")
     @ManyToOne
     private @Setter @Getter Panel panel;
 

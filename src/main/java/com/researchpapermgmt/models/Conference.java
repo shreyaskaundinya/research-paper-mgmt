@@ -6,6 +6,7 @@ import java.util.Set;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -39,7 +40,7 @@ public class Conference {
     private @Setter @Getter String location;
 
     @OneToMany
-    @JoinTable(name = "conf_panels", joinColumns = @JoinColumn(name = "conf_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "panel_id", referencedColumnName = "id"))
+    @JoinTable(name = "conf_panels", joinColumns = @JoinColumn(name = "conf_id", foreignKey = @ForeignKey(name = "id")), inverseJoinColumns = @JoinColumn(name = "panel_id", foreignKey = @ForeignKey(name = "id")))
     private @Setter @Getter Set<Panel> panels;
 
 }
