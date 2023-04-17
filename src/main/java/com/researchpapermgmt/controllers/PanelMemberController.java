@@ -16,12 +16,14 @@ import com.researchpapermgmt.repositories.PanelMemberRepository;
 
 
 
+
 @Controller
 @RequestMapping("/panelmember/")
 public class PanelMemberController {
 
 	@Autowired
 	private PanelMemberRepository panelmemberRepository;	
+	
 	
 	@GetMapping("showForm")
 	public String showPanelMemberForm(Panelmember panelmember) {
@@ -33,6 +35,9 @@ public class PanelMemberController {
 		model.addAttribute("panelmembers", this.panelmemberRepository.findAll());
 		return "index_panelmember";
 	}
+
+
+	
 	
 	@PostMapping("add")
 	public String addPanelMember(@Valid @ModelAttribute("panelmember") Panelmember panelmember, BindingResult result, Model model) {
