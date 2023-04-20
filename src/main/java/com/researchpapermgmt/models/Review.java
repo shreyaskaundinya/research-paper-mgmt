@@ -1,11 +1,11 @@
 package com.researchpapermgmt.models;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -22,12 +22,10 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private @Setter @Getter long id;
 
-    @JoinColumn(name = "paper_id")
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private @Setter @Getter Paper paper;
 
-    @JoinColumn(name = "panel_id")
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private @Setter @Getter Panel panel;
 
     @Column(name = "comment")

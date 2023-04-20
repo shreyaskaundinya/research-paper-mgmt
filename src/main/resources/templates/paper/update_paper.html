@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <style type="">
+        label {
+            display: flex;
+            gap: 1rem;
+        }
+        input,
+        textarea {
+            border: 1px solid black;
+        }
+    </style>
+    <body>
+        <nav class="bg-blue-900 text-white p-4 h-16 flex justify-between px-8">
+            <h1 class="text-2xl">Paper Management [PES1UG20CS409]</h1>
+            <ul class="flex gap-4">
+                <li>
+                    <a href="/">View all papers</a>
+                </li>
+                <li>
+                    <a href="/paper/create">Create new paper</a>
+                </li>
+            </ul>
+        </nav>
+
+        <form
+            class="flex flex-col border-2 border-zinc-500 max-w-4xl gap-2 mx-auto p-4 mt-20"
+            th:action="@{/paper/edit/{id}(id = ${paper.id})}"
+            th:object="${paper}"
+            method="POST"
+        >
+            <p class="text-center font-bold text-2xl">Update Paper Form</p>
+            <label for="">
+                Title :
+                <input type="text" name="title" th:field="*{title}" />
+            </label>
+
+            <label for="">
+                Keywords :
+                <input type="text" name="keywords" th:field="*{keywords}" />
+            </label>
+
+            <label for="">
+                Authors :
+                <input type="text" name="authors" th:field="*{authors}" />
+            </label>
+
+            <label for="">
+                Paper Text :
+                <input type="text" name="paperText" th:field="*{paperText}" />
+            </label>
+
+            <button type="submit" class="border bg-zinc-500">Submit</button>
+        </form>
+    </body>
+</html>

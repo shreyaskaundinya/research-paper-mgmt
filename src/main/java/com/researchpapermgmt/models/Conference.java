@@ -3,14 +3,12 @@ package com.researchpapermgmt.models;
 import java.util.Date;
 import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -39,8 +37,6 @@ public class Conference {
     @Column(name = "location")
     private @Setter @Getter String location;
 
-    @OneToMany
-    @JoinTable(name = "conf_panels", joinColumns = @JoinColumn(name = "conf_id", foreignKey = @ForeignKey(name = "id")), inverseJoinColumns = @JoinColumn(name = "panel_id", foreignKey = @ForeignKey(name = "id")))
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "conference")
     private @Setter @Getter Set<Panel> panels;
-
 }

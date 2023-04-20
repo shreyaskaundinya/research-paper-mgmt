@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title></title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body>
+        <nav class="bg-blue-900 text-white p-4 h-16 flex justify-between px-8">
+            <h1 class="text-2xl">Paper Management [PES1UG20CS409]</h1>
+            <ul class="flex gap-4">
+                <li>
+                    <a href="/">View all papers</a>
+                </li>
+                <li>
+                    <a href="/paper/create">Create new paper</a>
+                </li>
+            </ul>
+        </nav>
+
+        <table class="table max-w-7xl mx-auto mt-20">
+            <thead class="table-dark">
+                <tr class="border">
+                    <th class="border border-black">Title</th>
+                    <th class="border border-black">Authors</th>
+                    <th class="border border-black">Keywords</th>
+                    <th class="border border-black">Paper Text</th>
+                    <th class="border border-black">Approved</th>
+                    <th class="border border-black">Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr th:each="paper: ${papers}" class="bg-zinc-500">
+                    <td
+                        class="border border-black"
+                        th:text="${paper.title}"
+                    ></td>
+                    <td
+                        class="border border-black"
+                        th:text="${paper.authors}"
+                    ></td>
+                    <td
+                        class="border border-black"
+                        th:text="${paper.keywords}"
+                    ></td>
+                    <td
+                        class="border border-black"
+                        th:text="${paper.paperText}"
+                    ></td>
+                    <td
+                        class="border border-black"
+                        th:text="${paper.approved}"
+                    ></td>
+                    <td class="border border-black">
+                        <div class="flex gap-2">
+                            <form
+                                method="POST"
+                                th:action="@{/paper/approve/{id}(id=${paper.id})}"
+                            >
+                                <button class="px-2 py-1 bg-green-700">
+                                    Approve
+                                </button>
+                            </form>
+                            <a
+                                th:href="@{/paper/edit/{id}(id=${paper.id})}"
+                                class="px-2 py-1 bg-blue-700"
+                            >
+                                Update
+                            </a>
+                            <form
+                                method="POST"
+                                th:action="@{/paper/delete/{id}(id=${paper.id})}"
+                            >
+                                <button class="px-2 py-1 bg-red-700">
+                                    Delete
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</html>

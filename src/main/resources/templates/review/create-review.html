@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="css/style.css" rel="stylesheet">
+    </head>
+    <body>
+        <h1>Create Review for 
+            <span th:text="${paper_id}"></span>
+        </h1>
+        <form
+            class="flex flex-col border-2 border-zinc-500 max-w-4xl gap-2 mx-auto p-4 mt-20"
+            th:action="@{/review/create}"
+            th:object="${review}"
+            method="POST"
+        >
+            <p class="text-center font-bold text-2xl">Create Paper Form</p>
+            <label for="">
+                Title :
+                <input type="text" name="title" value="" />
+            </label>
+
+            <label for="">
+                Keywords :
+                <input type="text" name="keywords" value="" />
+            </label>
+
+            <label for="">
+                Authors :
+                <input type="text" name="authors" value="" />
+            </label>
+
+            <label for="">
+                Paper Text :
+                <input type="text" name="paperText" value="" />
+            </label>
+
+            <button type="submit" class="border bg-zinc-500">Submit</button>
+        </form>
+    </body>
+</html>

@@ -1,0 +1,11 @@
+drop table if exists author;
+drop table if exists conf_panels;
+drop table if exists confadmin;
+drop table if exists conference;
+drop table if exists panel;
+drop table if exists panel_members;
+drop table if exists panelmember;
+drop table if exists paper;
+drop table if exists paper_authors;
+drop table if exists review;
+drop table if exists user;
