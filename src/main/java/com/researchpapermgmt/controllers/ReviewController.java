@@ -18,6 +18,7 @@ public class ReviewController {
 
     @GetMapping("/review/add/{paper_id}")
     public String ReviewPaperGet(Model model, @PathVariable long paper_id) {
+
         model.addAttribute("paper_id", paper_id);
         model.addAttribute("paper", paperService.getPaperById(paper_id));
         return "review/create-review.html";
@@ -26,6 +27,7 @@ public class ReviewController {
     @PostMapping("/review/add/{paper_id}")
     public String ReviewPaperPost(@PathVariable long paper_id, @ModelAttribute("review") Review review) {
         // TODO : paper service and panel service
+        // Check if review for paper is by assigned panel
         review.setPaper(paperService.getPaperById(paper_id));
         // review.setPanel(null);
         reviewService.createReview(review);
@@ -34,6 +36,7 @@ public class ReviewController {
 
     @GetMapping("/review/get/{paper_id}")
     public String GetPaperReviews() {
+        // TODO
         return "";
     }
 }

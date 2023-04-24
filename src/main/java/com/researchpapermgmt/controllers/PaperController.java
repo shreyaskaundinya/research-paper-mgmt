@@ -7,7 +7,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.researchpapermgmt.enums.UserTypes;
 import com.researchpapermgmt.models.Paper;
+import com.researchpapermgmt.models.User;
+import com.researchpapermgmt.security.SessionUser;
 import com.researchpapermgmt.services.PaperService;
 
 @Controller
@@ -29,6 +32,15 @@ public class PaperController {
     @PostMapping("/paper/approve/{id}")
     public String approvePaperById(@PathVariable Long id,
             Model model) {
+        User currentUser = SessionUser.getUser();
+
+        if (currentUser == null) {
+            return "login";
+        }
+
+        else if (currentUser.getUserType() != UserTypes.PANEL_MEMBER) {
+            return "unauthorized";
+        }
         // model.addAttribute("papers", paperService.getAllPapers());
 
         // System.out.println(id);
@@ -41,13 +53,30 @@ public class PaperController {
 
     @GetMapping("/paper/edit/{id}")
     public String editPaperById(@PathVariable Long id, Model model) {
+        User currentUser = SessionUser.getUser();
+
+        if (currentUser == null) {
+            return "login";
+        }
+
+        else if (currentUser.getUserType() != UserTypes.AUTHOR) {
+            return "unauthorized";
+        }
         model.addAttribute("paper", paperService.getPaperById(id));
         return "paper/update_paper";
     }
 
     @PostMapping("/paper/edit/{id}")
     public String saveEditPaperById(@PathVariable Long id, @ModelAttribute("paper") Paper paper, Model model) {
+        User currentUser = SessionUser.getUser();
 
+        if (currentUser == null) {
+            return "login";
+        }
+
+        else if (currentUser.getUserType() != UserTypes.AUTHOR) {
+            return "unauthorized";
+        }
         Paper p = paperService.getPaperById(id);
         p.setTitle(paper.getTitle());
         p.setKeywords(paper.getKeywords());
@@ -60,12 +89,31 @@ public class PaperController {
 
     @PostMapping("/paper/delete/{id}")
     public String deletePaperById(@PathVariable Long id, Model model) {
+        User currentUser = SessionUser.getUser();
+
+        if (currentUser == null) {
+            return "login";
+        }
+
+        else if (currentUser.getUserType() != UserTypes.AUTHOR) {
+            return "unauthorized";
+        }
         paperService.deletePaperById(id);
         return "redirect:/";
     }
 
     @PostMapping("/paper/create")
     public String createPaper(@ModelAttribute("paper") Paper paper) {
+        User currentUser = SessionUser.getUser();
+
+        if (currentUser == null) {
+            return "login";
+        }
+
+        else if (currentUser.getUserType() != UserTypes.AUTHOR) {
+            return "unauthorized";
+        }
+
         // model.addAttribute("papers", paperService.getAllPapers());
         Paper p = new Paper();
         p.setId(paper.getId());
@@ -82,8 +130,19 @@ public class PaperController {
 
     @GetMapping("/paper/create")
     public String createPaperView(Model model) {
+        User currentUser = SessionUser.getUser();
+
+        if (currentUser == null) {
+            return "login";
+        }
+
+        else if (currentUser.getUserType() != UserTypes.AUTHOR) {
+            return "unauthorized";
+        }
         // model.addAttr ibute("papers", paperService.getAllPapers());
         return "paper/create_paper";
     }
+
+    // TODO : Assign panels to papers randomly
 
 }
