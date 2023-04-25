@@ -1,93 +1,93 @@
 package com.researchpapermgmt.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.researchpapermgmt.enums.UserTypes;
 import com.researchpapermgmt.models.User;
 import com.researchpapermgmt.repositories.UserRepository;
 import com.researchpapermgmt.security.SessionUser;
+import com.researchpapermgmt.services.UserService;
 
 @Controller
 @RequestMapping("/user/")
 public class UserController {
 
-	@Autowired
+	private UserService userService;
 	private UserRepository userRepository;
+
+	UserController(UserService userService, UserRepository userRepository) {
+		this.userService = userService;
+		this.userRepository = userRepository;
+	}
 
 	@GetMapping("/")
 	public String index() {
 		return "index_user";
 	}
 
-	@GetMapping("showForm")
-	public String showUserForm(User user) {
-		return "add-user";
-	}
+	// @GetMapping("list")
+	// public String users(Model model) {
+	// model.addAttribute("users", this.userRepository.findAll());
+	// return "index_user";
+	// }
 
-	@GetMapping("list")
-	public String users(Model model) {
-		model.addAttribute("users", this.userRepository.findAll());
-		return "index_user";
-	}
+	// @PostMapping("add")
+	// public String addUser(@Valid User user, BindingResult result, Model model) {
+	// if (result.hasErrors()) {
+	// return "add-user";
+	// }
 
-	@PostMapping("add")
-	public String addUser(@Valid User user, BindingResult result, Model model) {
-		if (result.hasErrors()) {
-			return "add-user";
-		}
+	// this.userRepository.save(user);
+	// return "redirect:list";
+	// }
 
-		this.userRepository.save(user);
-		return "redirect:list";
-	}
+	// @GetMapping("edit/{id}")
+	// public String showUpdateForm(@PathVariable("id") long id, Model model) {
+	// User currentUser = SessionUser.getUser();
 
-	@GetMapping("edit/{id}")
-	public String showUpdateForm(@PathVariable("id") long id, Model model) {
-		User currentUser = SessionUser.getUser();
+	// if (currentUser == null) {
 
-		if (currentUser == null) {
+	// }
 
-		}
+	// User user = this.userRepository.findById(id)
+	// .orElseThrow(() -> new IllegalArgumentException("Invalid user id : " + id));
 
-		User user = this.userRepository.findById(id)
-				.orElseThrow(() -> new IllegalArgumentException("Invalid user id : " + id));
+	// model.addAttribute("user", user);
+	// return "update-user";
+	// }
 
-		model.addAttribute("user", user);
-		return "update-user";
-	}
+	// @PostMapping("update/{id}")
+	// public String updateUser(@PathVariable("id") long id, @Valid User user,
+	// BindingResult result, Model model) {
+	// if (result.hasErrors()) {
+	// user.setId(id);
+	// return "update-user";
+	// }
 
-	@PostMapping("update/{id}")
-	public String updateUser(@PathVariable("id") long id, @Valid User user, BindingResult result, Model model) {
-		if (result.hasErrors()) {
-			user.setId(id);
-			return "update-user";
-		}
+	// // update student
+	// userRepository.save(user);
 
-		// update student
-		userRepository.save(user);
+	// // get all students ( with update)
+	// model.addAttribute("users", this.userRepository.findAll());
+	// return "index_user";
+	// }
 
-		// get all students ( with update)
-		model.addAttribute("users", this.userRepository.findAll());
-		return "index_user";
-	}
+	// @GetMapping("delete/{id}")
+	// public String deleteUser(@PathVariable("id") long id, Model model) {
 
-	@GetMapping("delete/{id}")
-	public String deleteUser(@PathVariable("id") long id, Model model) {
+	// User user = this.userRepository.findById(id)
+	// .orElseThrow(() -> new IllegalArgumentException("Invalid user id : " + id));
 
-		User user = this.userRepository.findById(id)
-				.orElseThrow(() -> new IllegalArgumentException("Invalid user id : " + id));
+	// this.userRepository.delete(user);
+	// model.addAttribute("users", this.userRepository.findAll());
+	// return "index_user";
 
-		this.userRepository.delete(user);
-		model.addAttribute("users", this.userRepository.findAll());
-		return "index_user";
-
-	}
+	// }
 
 	@GetMapping("/register")
 	public String GetRegisterPage() {
@@ -103,14 +103,35 @@ public class UserController {
 
 		if (user == null) {
 			// make user
+			User userNew = new User();
+			userNew.setName(name);
+			userNew.setEmail(email);
+			userNew.setPassword(password);
+
+			switch (user_type) {
+				case "USER":
+					userNew.setUserType(UserTypes.USER);
+					break;
+				case "CONF_ADMIN":
+					userNew.setUserType(UserTypes.CONF_ADMIN);
+					break;
+				case "PANEL_MEM":
+					userNew.setUserType(UserTypes.PANEL_MEMBER);
+					break;
+				case "AUTHOR":
+					userNew.setUserType(UserTypes.AUTHOR);
+					break;
+				default:
+					userNew.setUserType(UserTypes.USER);
+			}
+
+			userService.createUser(userNew);
 
 			return "auth/login";
 		} else {
 			// email exists
 			return "auth/register";
 		}
-
-		return "index";
 	}
 
 	@GetMapping("/login")
@@ -119,19 +140,27 @@ public class UserController {
 	}
 
 	@PostMapping("/login")
-	public String PostLogin(Model model, @RequestParam String username, @RequestParam String password) {
-		// model.addAttribute("username", username);
-		// model.addAttribute("password", password);
-		User user = userRepository.findByName(username);
+	public String PostLogin(Model model, @RequestParam String email, @RequestParam String password) {
+		User user = userRepository.findByEmail(email);
+
+		System.out.println(user);
 
 		if (user == null) {
-			return "login";
+			return "auth/login";
 		}
 
 		if (user.getPassword().equals(password)) {
-
+			SessionUser.setUser(user);
+			model.addAttribute("user", user);
+			return "index";
+		} else {
+			return "login";
 		}
+	}
 
-		return "index";
+	@PostMapping("/logout")
+	public String PostLogout() {
+		SessionUser.setUser(null);
+		return "login";
 	}
 }
