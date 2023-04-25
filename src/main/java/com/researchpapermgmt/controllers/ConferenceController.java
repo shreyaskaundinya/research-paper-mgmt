@@ -22,6 +22,7 @@ public class ConferenceController {
     }
 
     // TODO : Create conf
+
     @GetMapping("/create")
     public String GetCreateConfPage() {
         return "conference/create";
@@ -46,6 +47,8 @@ public class ConferenceController {
 
         return "conference/viewall";
     }
+
+    
 
     // TODO : Edit conf
     // TODO : Get Conf by id page [specific conf page]
