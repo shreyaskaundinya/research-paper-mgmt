@@ -48,11 +48,11 @@ public class PaperController {
         User currentUser = SessionUser.getUser();
 
         if (currentUser == null) {
-            return "login";
+            return "auth/login";
         }
 
         else if (currentUser.getUserType() != UserTypes.PANEL_MEMBER) {
-            return "unauthorized";
+            return "auth/unauthorized";
         }
         // model.addAttribute("papers", paperService.getAllPapers());
 
@@ -84,11 +84,11 @@ public class PaperController {
         User currentUser = SessionUser.getUser();
 
         if (currentUser == null) {
-            return "login";
+            return "auth/login";
         }
 
         else if (currentUser.getUserType() != UserTypes.AUTHOR) {
-            return "unauthorized";
+            return "auth/unauthorized";
         }
         Paper p = paperService.getPaperById(id);
         p.setTitle(paper.getTitle());
@@ -109,11 +109,11 @@ public class PaperController {
         User currentUser = SessionUser.getUser();
 
         if (currentUser == null) {
-            return "login";
+            return "auth/login";
         }
 
         else if (currentUser.getUserType() != UserTypes.AUTHOR) {
-            return "unauthorized";
+            return "auth/unauthorized";
         }
         paperService.deletePaperById(id);
         return "redirect:/";
@@ -121,17 +121,17 @@ public class PaperController {
 
     @PostMapping("/paper/create")
     public String createPaper(@RequestParam String title, @RequestParam String keywords, @RequestParam String authors, @RequestParam String paperText) {
-        /*
+        
         User currentUser = SessionUser.getUser();
 
         if (currentUser == null) {
-            return "login";
+            return "auth/login";
         }
 
         else if (currentUser.getUserType() != UserTypes.AUTHOR) {
-            return "unauthorized";
+            return "auth/unauthorized";
         }
-        */
+        
         // model.addAttribute("papers", paperService.getAllPapers());
         Paper p = new Paper();
         //p.setId(paper.getId());
@@ -151,17 +151,17 @@ public class PaperController {
 
     @GetMapping("/paper/create")
     public String createPaperView(Model model) {
-        /*
+        
         User currentUser = SessionUser.getUser();
 
         if (currentUser == null) {
-            return "login";
+            return "auth/login";
         }
 
         else if (currentUser.getUserType() != UserTypes.AUTHOR) {
-            return "unauthorized";
+            return "auth/unauthorized";
         }
-        */
+        
         // model.addAttr ibute("papers", paperService.getAllPapers());
         return "paper/create_paper";
     }
