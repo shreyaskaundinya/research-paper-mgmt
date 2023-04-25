@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link href="css/style.css" rel="stylesheet" />
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+            integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+            crossorigin="anonymous"
+        />
+    </head>
+    <body class="grid place-items-center">
+        <h1 class="text-2xl font-bold">Create Panel</h1>
+
+        <form action="/conf/create" method="POST" class="card p-4">
+            <label for="name">
+                Name :
+                <input type="text" name="name" class="border border-black" />
+            </label>
+            <label for="panel members">
+                Panel Members :
+                <input
+                    type="text"
+                    name="panel members"
+                    class="border border-black"
+                />
+            </label>
+            <label for="conference">
+                Conference :
+                <input
+                    type="text"
+                    name="conference"
+                    class="border border-black"
+                />
+            </label>
+
+            <button class="btn btn-primary">Submit</button>
+        </form>
+    </body>
+</html>
