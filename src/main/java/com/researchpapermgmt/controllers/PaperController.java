@@ -1,17 +1,22 @@
 package com.researchpapermgmt.controllers;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.researchpapermgmt.enums.UserTypes;
 import com.researchpapermgmt.models.Paper;
 import com.researchpapermgmt.models.User;
 import com.researchpapermgmt.security.SessionUser;
 import com.researchpapermgmt.services.PaperService;
+import com.researchpapermgmt.services.UserService;
 
 @Controller
 public class PaperController {
@@ -67,7 +72,7 @@ public class PaperController {
     }
 
     @PostMapping("/paper/edit/{id}")
-    public String saveEditPaperById(@PathVariable Long id, @ModelAttribute("paper") Paper paper, Model model) {
+    public String saveEditPaperById(@PathVariable Long id, @ModelAttribute("paper") Paper paper, Model model, @RequestParam("authors") String authorsInput) {
         User currentUser = SessionUser.getUser();
 
         if (currentUser == null) {
@@ -82,6 +87,13 @@ public class PaperController {
         p.setKeywords(paper.getKeywords());
         p.setPaperText(paper.getPaperText());
         p.setAuthors(paper.getAuthors());
+
+        String[] authorNames = authorsInput.split(",");
+        Set<User> authors;
+        for (String authorName : authorNames) {
+            User author = UserService.findOrCreateAuthor(authorName);
+            authors.add(author);
+        }
 
         paperService.updatePaper(p);
         return "redirect:/";
@@ -104,6 +116,7 @@ public class PaperController {
 
     @PostMapping("/paper/create")
     public String createPaper(@ModelAttribute("paper") Paper paper) {
+        /*
         User currentUser = SessionUser.getUser();
 
         if (currentUser == null) {
@@ -113,7 +126,7 @@ public class PaperController {
         else if (currentUser.getUserType() != UserTypes.AUTHOR) {
             return "unauthorized";
         }
-
+        */
         // model.addAttribute("papers", paperService.getAllPapers());
         Paper p = new Paper();
         p.setId(paper.getId());
@@ -130,6 +143,7 @@ public class PaperController {
 
     @GetMapping("/paper/create")
     public String createPaperView(Model model) {
+        /*
         User currentUser = SessionUser.getUser();
 
         if (currentUser == null) {
@@ -139,10 +153,12 @@ public class PaperController {
         else if (currentUser.getUserType() != UserTypes.AUTHOR) {
             return "unauthorized";
         }
+        */
         // model.addAttr ibute("papers", paperService.getAllPapers());
         return "paper/create_paper";
     }
 
     // TODO : Assign panels to papers randomly
+    
 
 }

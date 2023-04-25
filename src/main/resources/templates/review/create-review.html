@@ -16,25 +16,21 @@
             th:object="${review}"
             method="POST"
         >
-            <p class="text-center font-bold text-2xl">Create Paper Form</p>
+            <p class="text-center font-bold text-2xl">Create Review Form</p>
             <label for="">
                 Title :
                 <input type="text" name="title" value="" />
             </label>
 
             <label for="">
-                Keywords :
-                <input type="text" name="keywords" value="" />
+                Panel ID :
+                <input type="text" name="panel_id" value="" />
             </label>
 
-            <label for="">
-                Authors :
-                <input type="text" name="authors" value="" />
-            </label>
 
             <label for="">
-                Paper Text :
-                <input type="text" name="paperText" value="" />
+                Comments :
+                <input type="text" name="comments" value="" />
             </label>
 
             <button type="submit" class="border bg-zinc-500">Submit</button>
