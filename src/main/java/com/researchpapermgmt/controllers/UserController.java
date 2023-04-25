@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-//import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.researchpapermgmt.models.User;
 import com.researchpapermgmt.repositories.UserRepository;
@@ -89,8 +89,49 @@ public class UserController {
 
 	}
 
+	@GetMapping("/register")
+	public String GetRegisterPage() {
+		return "auth/register";
+	}
+
+	@PostMapping("/register")
+	public String PostReg(Model model, @RequestParam String name, @RequestParam String email,
+			@RequestParam String user_type,
+			@RequestParam String password) {
+
+		User user = userRepository.findByEmail(email);
+
+		if (user == null) {
+			// make user
+
+			return "auth/login";
+		} else {
+			// email exists
+			return "auth/register";
+		}
+
+		return "index";
+	}
+
 	@GetMapping("/login")
 	public String GetLoginPage() {
-		return "login";
+		return "auth/login";
+	}
+
+	@PostMapping("/login")
+	public String PostLogin(Model model, @RequestParam String username, @RequestParam String password) {
+		// model.addAttribute("username", username);
+		// model.addAttribute("password", password);
+		User user = userRepository.findByName(username);
+
+		if (user == null) {
+			return "login";
+		}
+
+		if (user.getPassword().equals(password)) {
+
+		}
+
+		return "index";
 	}
 }

@@ -1,6 +1,5 @@
 package com.researchpapermgmt.models;
 
-import java.util.Date;
 import java.util.Set;
 
 import jakarta.persistence.CascadeType;
@@ -29,10 +28,10 @@ public class Conference {
     private @Setter @Getter String name;
 
     @Column(name = "starting_date")
-    private @Setter @Getter Date starting_date;
+    private @Setter @Getter String starting_date;
 
     @Column(name = "ending_date")
-    private @Setter @Getter Date ending_date;
+    private @Setter @Getter String ending_date;
 
     @Column(name = "location")
     private @Setter @Getter String location;

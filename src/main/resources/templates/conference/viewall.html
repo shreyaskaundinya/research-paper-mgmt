@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+            integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+            crossorigin="anonymous"
+        />
+    </head>
+    <body>
+        <p>Name : <span th:text="${name}"></span></p>
+        <p>Start date : <span th:text="${start_date}"></span></p>
+        <p>End date : <span th:text="${end_date}"></span></p>
+        <p>Location : <span th:text="${location}"></span></p>
+    </body>
+</html>
