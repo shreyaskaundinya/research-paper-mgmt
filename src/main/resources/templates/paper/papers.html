@@ -37,10 +37,11 @@
                         class="border border-black"
                         th:text="${paper.title}"
                     ></td>
-                    <td
-                        class="border border-black"
-                        th:text="${paper.authors}"
-                    ></td>
+                    <td class="border border-black">
+                        <span th:each="author : ${paper.authors}">
+                            <span th:text="${author.name}"></span>
+                        </span>
+                    </td>
                     <td
                         class="border border-black"
                         th:text="${paper.keywords}"
