@@ -2,19 +2,23 @@
 
 
 ## Team members:
+```
 1.
 Shishir Hegde
 PES1UG20CS396
+
 2.
 Shreyas Kaundinya
 PES1UG20CS409
+
 3.
 Shrinithi Natarajan
 PES1UG20CS413
+
 4.
 Siddharth Soora
 PES1UG20CS426
-
+```
 
 ## Synopsis:
 This research paper management portal handles and manages everything related to research papers. From the process of being a user for searching and viewing a paper, to logging in as an author and publishing a paper, or being a panel member at a conference who reviews the papers, all sorts of dynamics are established in the project. Users can search and view papers, so can the authors. The panel members can review, edit and approve papers. There is also a conference admin who is in charge of creating and scheduling conferences where the papers that have been submitted can be reviewed by the panellists.
