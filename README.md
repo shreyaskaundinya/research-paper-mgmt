@@ -39,7 +39,7 @@ The Panel Member can attend the conference as a panellist and review the paper a
 
 
 
-## Class diagram
+## Class diagram:
 
 ![image](https://user-images.githubusercontent.com/93257735/235209115-8bece0eb-952b-43d1-b095-e8422e2ee7b1.png)
 
